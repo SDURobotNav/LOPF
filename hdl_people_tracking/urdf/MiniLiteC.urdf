@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="JueyingMiniLite">
+  <link name="BASE">
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/BASE.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.004"/>
+      <geometry>
+        <box size="0.236 0.184 0.092"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="Base2Iner" type="fixed">
+    <origin xyz="0 0 0"/>
+    <parent link="BASE" />
+    <child link="BASE_INER" />
+  </joint>
+
+  <link name="BASE_INER">
+    <inertial>
+      <origin xyz="0.0015077 -0.0022815 0.002674"/>
+      <mass value="5.6352" />
+      <inertia ixx="0.0088043" ixy="5.9997E-05" ixz="0.00011144" iyy="0.01327" iyz="1.6337E-05" izz="0.018186" />
+    </inertial>
+  </link>
+
+  <link name="FL_HIP">
+    <inertial>
+      <origin xyz="0.047924 -0.0082768 -0.00047296"/>
+      <mass value="0.45879" />
+      <inertia ixx="0.00014995" ixy="2.389E-07" ixz="-3.6701E-06" iyy="0.00026266" iyz="5.1131E-07" izz="0.00014535" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/FL_HIP.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="FL_HipX" type="revolute">
+    <origin xyz="0.1258 0.055 0"/>
+    <parent link="BASE" />
+    <child link="FL_HIP" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.523" upper="0.523" effort="13.2" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="FL_THIGH">
+    <inertial>
+      <origin xyz="-0.0014025 -0.025622 -0.015888"/>
+      <mass value="0.55479" />
+      <inertia ixx="0.00067595" ixy="-4.7781E-07" ixz="-4.0151E-05" iyy="0.0008367" iyz="1.343E-07" izz="0.00020884" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/L_THIGH.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.068"/>
+      <geometry>
+        <box size="0.07 0.04 0.216"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="FL_HipY" type="revolute">
+    <origin xyz="0.0492 0.080898 0"/>
+    <parent link="FL_HIP" />
+    <child link="FL_THIGH" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-3.49" upper="0.349" effort="13.2" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="FL_SHANK">
+    <inertial>
+      <origin xyz="-6.0267E-05 -1.0179E-06 -0.1281"/>
+      <mass value="0.08" />
+      <inertia ixx="0.00022857" ixy="2.2816E-09" ixz="2.1021E-06" iyy="0.00023367" iyz="6.8779E-08" izz="1.1919E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/SHANK.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="FL_Knee" type="revolute">
+    <origin xyz="0 0 -0.18"/>
+    <parent link="FL_THIGH" />
+    <child link="FL_SHANK" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0.3" upper="2.44" effort="28" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="FL_FOOT">
+    <inertial>
+      <mass value="1e-9" />
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1E-12" />
+    </inertial>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="FL_Ankle" type="fixed">
+    <origin xyz="0 0 -0.18"/>
+    <parent link="FL_SHANK" />
+    <child link="FL_FOOT" />
+  </joint>
+
+  <link name="FR_HIP">
+    <inertial>
+      <origin xyz="0.047946 0.0076001 -0.00048875"/>
+      <mass value="0.45879" />
+      <inertia ixx="0.00014971" ixy="-3.5222E-07" ixz="-3.7452E-06" iyy="0.00026266" iyz="-4.2732E-07" izz="0.00014559" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/FR_HIP.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="FR_HipX" type="revolute">
+    <origin xyz="0.1258 -0.055 0"/>
+    <parent link="BASE" />
+    <child link="FR_HIP" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-0.523" upper="0.523" effort="13.2" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="FR_THIGH">
+    <inertial>
+      <origin xyz="-0.0013962 0.025621 -0.015879"/>
+      <mass value="0.55481" />
+      <inertia ixx="0.00067596" ixy="4.4371E-07" ixz="-4.0135E-05" iyy="0.00083679" iyz="-1.6601E-07" izz="0.00020893" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/R_THIGH.dae" />
+      </geometry>
+      
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.068"/>
+      <geometry>
+        <!-- <mesh filename="./meshes/THIGH_C.obj" /> -->
+        <box size="0.07 0.04 0.216"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="FR_HipY" type="revolute">
+    <origin xyz="0.0492 -0.080898 0"/>
+    <parent link="FR_HIP" />
+    <child link="FR_THIGH" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-3.49" upper="0.349" effort="13.2" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="FR_SHANK">
+    <inertial>
+      <origin xyz="-6.0267E-05 -1.0179E-06 -0.1281"/>
+      <mass value="0.08" />
+      <inertia ixx="0.00022857" ixy="2.2816E-09" ixz="2.1021E-06" iyy="0.00023367" iyz="6.8779E-08" izz="1.1919E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/SHANK.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="FR_Knee" type="revolute">
+    <origin xyz="0 0 -0.18"/>
+    <parent link="FR_THIGH" />
+    <child link="FR_SHANK" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0.3" upper="2.44" effort="28" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="FR_FOOT">
+    <inertial>
+      <mass value="1e-9" />
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1E-12" />
+    </inertial>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="FR_Ankle" type="fixed">
+    <origin xyz="0 0 -0.18"/>
+    <parent link="FR_SHANK" />
+    <child link="FR_FOOT" />
+  </joint>
+
+  <link name="HL_HIP">
+    <inertial>
+      <origin xyz="-0.047923 -0.0082768 -0.00047295"/>
+      <mass value="0.45879" />
+      <inertia ixx="0.00014995" ixy="-2.3272E-07" ixz="3.6331E-06" iyy="0.00026266" iyz="5.1134E-07" izz="0.00014535" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/HL_HIP.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="HL_HipX" type="revolute">
+    <origin xyz="-0.1258 0.055 0"/>
+    <parent link="BASE" />
+    <child link="HL_HIP" />
+    <axis xyz="1 0 0" />
+    <limit lower="-0.523" upper="0.523" effort="13.2" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="HL_THIGH">
+    <inertial>
+      <origin xyz="-0.0015169 -0.024336 -0.016886"/>
+      <mass value="0.55473" />
+      <inertia ixx="0.00069602" ixy="-1.119E-06" ixz="-4.0661E-05" iyy="0.00085356" iyz="-9.551E-07" izz="0.00020592" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/L_THIGH.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.068"/>
+      <geometry>
+        <box size="0.07 0.04 0.216"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="HL_HipY" type="revolute">
+    <origin xyz="-0.0492 0.080898 0"/>
+    <parent link="HL_HIP" />
+    <child link="HL_THIGH" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-3.49" upper="0.349" effort="13.2" velocity="20" />
+  </joint>
+
+  <link name="HL_SHANK">
+    <inertial>
+      <origin xyz="-6.0267E-05 -1.0187E-06 -0.1281"/>
+      <mass value="0.08" />
+      <inertia ixx="0.00022857" ixy="2.2815E-09" ixz="2.1021E-06" iyy="0.00023367" iyz="6.878E-08" izz="1.1919E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/SHANK.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="HL_Knee" type="revolute">
+    <origin xyz="0.00026392 0 -0.18"/>
+    <parent link="HL_THIGH" />
+    <child link="HL_SHANK" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0.3" upper="2.44" effort="28" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="HL_FOOT">
+    <inertial>
+      <mass value="1e-9" />
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1E-12" />
+    </inertial>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="HL_Ankle" type="fixed">
+    <origin xyz="0 0 -0.18"/>
+    <parent link="HL_SHANK" />
+    <child link="HL_FOOT" />
+  </joint>
+
+  <link name="HR_HIP">
+    <inertial>
+      <origin xyz="-0.047901 0.0076001 -0.00049122"/>
+      <mass value="0.45879" />
+      <inertia ixx="0.0001497" ixy="1.1564E-07" ixz="3.5848E-06" iyy="0.00026266" iyz="-4.1425E-07" izz="-4.1425E-07" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/HR_HIP.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="HR_HipX" type="revolute">
+    <origin xyz="-0.1258 -0.055 0"/>
+    <parent link="BASE" />
+    <child link="HR_HIP" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-0.523" upper="0.523" effort="13.2" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="HR_THIGH">
+    <inertial>
+      <origin xyz="-0.0015162 0.024338 -0.016895"/>
+      <mass value="0.5547" />
+      <inertia ixx="0.00069564" ixy="9.4777E-07" ixz="-4.1533E-05" iyy="0.0008535" iyz="1.0433E-06" izz="0.00020623" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/R_THIGH.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.068"/>
+      <geometry>
+        <!-- <mesh filename="./meshes/THIGH_C.obj" /> -->
+        <box size="0.07 0.04 0.216"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="HR_HipY" type="revolute">
+    <origin xyz="-0.0492 -0.080898 0"/>
+    <parent link="HR_HIP" />
+    <child link="HR_THIGH" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-3.49" upper="0.349" effort="13.2" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="HR_SHANK">
+    <inertial>
+      <origin xyz="-6.0267E-05 -1.0179E-06 -0.1281"/>
+      <mass value="0.08" />
+      <inertia ixx="0.00022857" ixy="2.2816E-09" ixz="2.1021E-06" iyy="0.00023367" iyz="6.8779E-08" izz="1.1919E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://hdl_people_tracking/meshes/SHANK.dae" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="HR_Knee" type="revolute">
+    <origin xyz="0 0 -0.18"/>
+    <parent link="HR_THIGH" />
+    <child link="HR_SHANK" />
+    <axis xyz="0 -1 0" />
+    <limit lower="0.3" upper="2.44" effort="28" velocity="20" />
+    <dynamics damping="0" friction="0" />
+  </joint>
+
+  <link name="HR_FOOT">
+    <inertial>
+      <mass value="1e-9" />
+      <inertia ixx="1e-12" ixy="0" ixz="0" iyy="1e-12" iyz="0" izz="1E-12" />
+    </inertial>
+    <collision>
+      <geometry>
+        <sphere radius="0.02"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="HR_Ankle" type="fixed">
+    <origin xyz="0 0 -0.18"/>
+    <parent link="HR_SHANK" />
+    <child link="HR_FOOT" />
+  </joint>
+
+</robot>
