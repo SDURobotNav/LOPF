@@ -30,14 +30,14 @@ model_shape = [1, 8,8, 4]
 z_thre = 2.0
 z_m_thre = -1.5
 r_thre = 5.0
-ped_thre = 0.5
-
+ped_thre = 0.65
+rospy.get_param
 class receive_pcl():
 
     def __init__(self, model_path=None):
         # self.test_pcd = pcl.load()
         # rospy.init_node("person_publisher", anonymous=False)
-
+        temp_time = rospy.Time.now()
         pcl_rev = rospy.Subscriber("/pubClusters", myClusters, callback=self.handle_pcl)
         flag_rev = rospy.Subscriber("/record_time_python", std_msgs.msg.Bool, callback=self.handle_time)
 
@@ -155,16 +155,21 @@ class receive_pcl():
     def handle_pcl(self, msg):
         self.markers = MarkerArray()
         self.timeStamp = msg.Header.stamp
+
         self.frame_id = msg.Header.frame_id
         # print("Clusters len:{}".format(len(msg.clusters)))
-        begin_time = rospy.Time.now().nsecs
-
+        begin_time = rospy.Time.now()
+        print("begin_time is :{}".format(begin_time.to_sec()))
+        print("Time stamp is :{}".format(msg.Header.stamp.to_sec()))
+        if(math.fabs(begin_time.to_sec()-msg.Header.stamp.to_sec()>0.25)):
+            print("Time correction!!!!!!")
+            return False
         for cluster in msg.clusters:
             self.handle_pointcloud(cluster)
             self.total_cluster_num +=1
             print ("total_cluster_num is :{}".format(self.total_cluster_num))
-        end_time = rospy.Time.now().nsecs
-        self.time_list.append(end_time-begin_time)
+        # end_time = rospy.Time.now().nsecs
+        # self.time_list.append(end_time-begin_time)
         if self.pub_markers.get_num_connections():
 
             # print("{} time used!!".format((end_time - begin_time)))

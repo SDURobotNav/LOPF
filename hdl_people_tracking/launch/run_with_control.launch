@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <launch>
   <param name="/use_sim_time" value="false" />
+  
+  <include file="$(find hdl_people_tracking)/launch/mini_display.launch"/>
 
   <!-- arguments -->
  <!-- arguments -->
@@ -46,15 +48,16 @@
         <param name="local_port" value="43894"/>
         <param name="remote_port" value="43893"/>
         <param name="remote_ip" value="192.168.1.120"/>
-    </node>
+  </node>
   <node pkg="hdl_people_tracking" type="pos2vel" name="pos2vel">
   <param name = "postopic" value = "/mytarget_position"/>
   <param name = "veltopic" value = "/cmd_vel"/>
   <param name = "lostopic" value = "/lost_flag"/>
-  <param name = "kp_theta" value = "1.0"/>
+  <param name = "kp_theta" value = "2.0"/>
   <param name = "kp" value ="0.1"/>
   <param name = "max_vel" value = "2.0"/>
   <param name = "min_dis" value = "2.0"/>
+  <param name = "max_theta" value = "0.523"/>
   <param name = "max_lost_time" value = "10"/>
   </node>
   
